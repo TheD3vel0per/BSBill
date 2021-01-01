@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+  }
+  
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%;
+    margin-bottom:10px;
+    margin-top: 15px;
+    height: 400px;
+   
+  }
+
+  .btn.btn-success
+{
+    font-size: 16px;
+    border-color:  #000000;
+    padding: 15px 50px;
+    cursor: pointer;
+}
+.btn.btn-success:hover {
+  
+  outline: black;
+    background-color: white;
+    color: green;
+
+}

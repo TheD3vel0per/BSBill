@@ -1,0 +1,39 @@
+.main {
+   margin-left: 30px;
+   margin-top: 30px;
+  }
+
+.parent {
+    margin:10px;
+    display: inline-block;
+    width: 100%;
+} 
+
+.list {
+    margin-left: 5px;
+    width: 20% !important;
+    float: left;
+    
+}
+
+.dashboard {
+    width: 75% !important;
+    float: right;
+
+}
+
+.container-fluid-rating {
+    margin: 10px;
+}
+
+@media only screen and (max-width: 600px){
+
+    .list{
+        min-width: 100% !important;
+    }
+
+    .dashboard{
+        min-width: 100% !important;
+    }
+    
+}
