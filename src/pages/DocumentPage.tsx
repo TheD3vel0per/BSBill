@@ -12,19 +12,31 @@ import DisplaySummaryCard from "../components/DisplaySummaryCard";
 import DataList from "../components/DataList";
 import { mergeAll, filter, take } from 'rxjs/operators';
 import Bill from '../model/Bill';
+import { Subscription } from 'rxjs';
 
-class DocumentPage extends React.Component {
-    bill: Bill;
+class DocumentPage extends React.Component<{}, {bill: Bill, selected: string}> {
+    billsSub$: Subscription = new Subscription();
 
     constructor(props: any) {
         super(props);
-        this.bill = new Bill();
+        this.state = {
+            bill: new Bill(),
+            selected: "companies"
+        }
+
+        this.updateSelected = this.updateSelected.bind(this);
     }
 
     async componentDidMount() {
         // @ts-ignore
         const billService: BillService = window['bsbills']['billService'] as BillService;
         billService.init();
+
+        this.billsSub$ = billService.bills$.subscribe((data: any) => {
+            this.setState({
+                bill: data
+            });
+        })
 
         const id = "N.C 69";
 
@@ -37,11 +49,23 @@ class DocumentPage extends React.Component {
             )
             .toPromise();
 
-        this.bill = bill;
+        this.setState({
+            bill: bill,
+        });
+
+    }
+
+
+    updateSelected(option: string) {
+        this.setState({
+            selected: option
+        });
+        
     }
 
     render() {
 
+        console.log(this.state.selected);
 
         // Temporary link to navigate. Replace with dynamic bill url
         const tempLink = "https://www.congress.gov/congressional-record/2019/2/7/house-section/article/h1398-5?q=%7B%22search%22%3A%5B%22immigration%22%5D%7D&s=1&r=1"
@@ -68,10 +92,10 @@ class DocumentPage extends React.Component {
         //     }
         // }
 
-        const dateLength = this.bill.info["dates"].length
-        const moneyLength = this.bill.info["money"].length
-        const percentagesLength = this.bill.info["percentages"].length
-        const ratioLength = this.bill.info["ratios"].length
+        // const dateLength = this.bill.info["dates"].length
+        // const moneyLength = this.bill.info["money"].length
+        // const percentagesLength = this.bill.info["percentages"].length
+        // const ratioLength = this.bill.info["ratios"].length
 
         return (
             <>
@@ -100,12 +124,16 @@ class DocumentPage extends React.Component {
                             <div className="parent">
 
                                 {/* List of info to select from */}
-                                <DataList 
-                                    bill={this.bill}
+                                <DataList
+                                    bill={this.state.bill}
+                                    update={this.updateSelected}
                                 />
 
                                 <div className="dashboard">
-                                    <DisplaySummaryCard />
+                                    <DisplaySummaryCard 
+                                    bill={this.state.bill}
+                                    selected={this.state.selected}
+                                    />
                                 </div>
 
                             </div>
@@ -115,8 +143,8 @@ class DocumentPage extends React.Component {
 
                                 <div className="container-fluid-rating">
 
-                                    <Button> Not BS </Button>
-                                    <Button> BS </Button>
+                                    <Button variant="success" size="lg"> Not BS </Button>
+                                    <Button variant="danger" size = "lg"> BS </Button>
 
                                 </div>
 

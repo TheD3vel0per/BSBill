@@ -24,7 +24,6 @@ class Table extends React.Component<{}, {bills: Array<Bill> }>{
             this.setState({
                 bills: data
             });
-            console.log(this.state.bills);
         })
     }
 
