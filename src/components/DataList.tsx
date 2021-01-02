@@ -1,11 +1,28 @@
 import React from "react";
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
+import { Subscription } from 'rxjs';
+import BillService from "../services/BillService";
+
 
 
 const DataList: React.FC<{}> = () => {
 
-    const bill = {
+    const [bills, setBills] = React.useState();
+
+    let billsSub$: Subscription = new Subscription();
+
+    React.useEffect(() => {
+        // @ts-ignore
+        const billService: BillService = window['bsbills']['billService'] as BillService;
+
+        billsSub$ = billService.bills$.subscribe((data: React.SetStateAction<undefined>) => {
+            setBills(data);
+            console.log(data);
+        })
+    });
+
+    const bill_foo = {
 
         "billName": "Improving Medical Diagnosis Act",
 
@@ -21,10 +38,12 @@ const DataList: React.FC<{}> = () => {
         }
     }
 
-    const dateLength = bill.extractedInfo["dates"].length
-    const moneyLength = bill.extractedInfo["money"].length
-    const percentagesLength = bill.extractedInfo["percentages"].length
-    const ratioLength = bill.extractedInfo["ratios"].length
+
+
+    const dateLength = bill_foo.extractedInfo["dates"].length
+    const moneyLength = bill_foo.extractedInfo["money"].length
+    const percentagesLength = bill_foo.extractedInfo["percentages"].length
+    const ratioLength = bill_foo.extractedInfo["ratios"].length
 
     return (
 

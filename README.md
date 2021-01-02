@@ -1,15 +1,10 @@
-# BSBills <img align="right" alt="BSBills" src="./src/images/billbs.png">
+# BSBills <img align="right" alt="BSBills" src="./public/images/billbs.png">
 
 ## About This Project
 
-
-
 ## Technologies Used:
 
-
 ## API's Used:
-
-
 
 ## License
 ```
@@ -29,7 +24,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ```
 
-## Explore Space Team
+## BSBill Team
  - [Devam Sisodraker](https://github.com/TheD3vel0per)
  - [Vishal Desh](https://github.com/VDeshh)
  - [Noah Caleanu](https://github.com/caleanunoah)

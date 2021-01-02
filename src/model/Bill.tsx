@@ -3,14 +3,14 @@ export default class Document {
     billNumber: string;
     billURL: string;
     info: {
-        "dates": Array<Date>,
-        "money": Array<Number>;
-        "percentages": Array<String>,
-        "ratios": Array<String>,
-        "companies": Array<String>,
-        "courts": Array<String>,
-        "cusip": Array<String>,
-        "regulations": []
+        dates: Array<Date>,
+        money: Array<Number>;
+        percentages: Array<string>,
+        ratios: Array<string>,
+        companies: Array<string>,
+        courts: Array<string>,
+        cusip: Array<string>,
+        regulations: Array<string>
     };
     billVotes: {
         bs: number,
@@ -22,10 +22,23 @@ export default class Document {
         this.billName = "";
         this.billNumber = "";
         this.billURL = "";
-        this.info = {};
+        this.info = {
+            dates: [],
+            money: [],
+            percentages: [],
+            ratios: [],
+            companies: [],
+            courts: [],
+            cusip: [],
+            regulations: []
+        };
+        this.billVotes = {
+            bs: 0,
+            notbs: 0,
+        };
     }
 
     fromJSON(json: JSON) {
-        
+
     }
 }

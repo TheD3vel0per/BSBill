@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import './HomePage.css';
 import Table from "../components/Table";
-
+import Modal from "../components/Modal";
 // This page renders the home page along with all its components
 const HomePage: React.FC<{}> = () => {
     return (
@@ -19,7 +19,7 @@ const HomePage: React.FC<{}> = () => {
                             alignItems: "center"
                         }}>
                         <SearchBar />
-                        
+                        <Modal />
                     </div>
                     <Table />
                 </div>
