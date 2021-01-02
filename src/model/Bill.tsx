@@ -18,7 +18,7 @@ export default class Document {
     };
 
     constructor() {
-        // default init. can be removed later?
+        
         this.billName = "";
         this.billNumber = "";
         this.billURL = "";

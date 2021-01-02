@@ -9,122 +9,127 @@ import Button from 'react-bootstrap/Button';
 import './DocumentPage.css';
 import Typing from 'react-typing-animation';
 import DisplaySummaryCard from "../components/DisplaySummaryCard";
+import DataList from "../components/DataList";
+import { mergeAll, filter, take } from 'rxjs/operators';
+import Bill from '../model/Bill';
 
-const DocumentPage: React.FC<{}> = () => {
+class DocumentPage extends React.Component {
+    bill: Bill;
 
-    // Temporary link to navigate. Replace with dynamic bill url
-    const tempLink = "https://www.congress.gov/congressional-record/2019/2/7/house-section/article/h1398-5?q=%7B%22search%22%3A%5B%22immigration%22%5D%7D&s=1&r=1"
-
-    const displaySummary = "For this bill we have extracted: "
-
-    // TEST DATA, to be replaced with data from mongoDB
-    const bill = {
-
-        "billName": "Improving Medical Diagnosis Act",
-
-        "billNumber": "HR5014",
-
-        "billUrl": "",
-
-        "extractedInfo": {
-            "dates": ["2020-03-05", "2017-10-01"],
-            "money": [100, 500, 30000000],
-            "percentages": ["50%"],
-            "ratios": []
-        }
+    constructor(props: any) {
+        super(props);
+        this.bill = new Bill();
     }
 
-    const dateLength = bill.extractedInfo["dates"].length
-    const moneyLength = bill.extractedInfo["money"].length
-    const percentagesLength = bill.extractedInfo["percentages"].length
-    const ratioLength = bill.extractedInfo["ratios"].length
+    async componentDidMount() {
+        // @ts-ignore
+        const billService: BillService = window['bsbills']['billService'] as BillService;
+        billService.init();
 
-    return (
-        <>
-            <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-            </head>
+        const id = "N.C 69";
 
-            <body>
-                <Header />
+        const bill = await billService
+            .bills$
+            .pipe<Bill>(
+                mergeAll(),
+                filter((b: Bill) => b.billNumber == id),
+                take(1)
+            )
+            .toPromise();
 
-                <div className="main">
-                    <Typing>
-                        {/* Bill Title. Links to the bill if user wants to explore it in detail.
-                    Have to use anchor tag bc react Link only uses absolte paths*/}
-                        <h2 className="display-4"><a href={tempLink} target="_blank"> Title of Bill</a>
-                        </h2>
+        this.bill = bill;
+    }
 
-                    </Typing>
+    render() {
 
-                    {/* Page (text) content. */}
-                    <p>{displaySummary}</p>
 
-                    {/* Div to hold the data list and dashboard for bill*/}
-                    <div className="container-fluid">
+        // Temporary link to navigate. Replace with dynamic bill url
+        const tempLink = "https://www.congress.gov/congressional-record/2019/2/7/house-section/article/h1398-5?q=%7B%22search%22%3A%5B%22immigration%22%5D%7D&s=1&r=1"
 
-                        <div className="parent">
-                            <div className="list">
+        const displaySummary = "For this bill we have extracted: "
 
-                                {/* List of data we analyze for the bill (dates, monetary amounts, companies, etc ) */}
-                                <p>Bill Information</p>
-                                <ul className="list-group">
-                                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                                        Dates
-                                    <span className="badge bg-primary rounded-pill">{dateLength}</span>
-                                    </li>
-                                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                                        Monetary Amounts
-                                    <span className="badge bg-primary rounded-pill">{moneyLength}</span>
-                                    </li>
-                                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                                        Percentages
-                                    <span className="badge bg-primary rounded-pill">{percentagesLength}</span>
-                                    </li>
-                                </ul>
+        // TEST DATA, to be replaced with data from mongoDB
+        // const bill = {
+
+        //     "billName": "Improving Medical Diagnosis Act",
+
+        //     "billNumber": "HR5014",
+
+        //     "billUrl": "",
+
+        //     "info": {
+        //         "companies": ["Company-Name LLC"],
+        //         "courts": ["Supreme Court of New York"],
+        //         "dates": ["2020-03-05", "2017-10-01"],
+        //         "money": ["100", "500", "30000000"],
+        //         "percentages": ["50%"],
+        //         "ratios": ["one to three", "5:4"],
+        //         "regulations": ['123 CFR 456']
+        //     }
+        // }
+
+        const dateLength = this.bill.info["dates"].length
+        const moneyLength = this.bill.info["money"].length
+        const percentagesLength = this.bill.info["percentages"].length
+        const ratioLength = this.bill.info["ratios"].length
+
+        return (
+            <>
+                <head>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+                </head>
+
+                <body>
+                    <Header />
+
+                    <div className="main">
+                        <Typing>
+                            {/* Bill Title. Links to the bill if user wants to explore it in detail.
+                            Have to use anchor tag bc react Link only uses absolte paths*/}
+                            <h2 className="display-4"><a href={tempLink} target="_blank"> Title of Bill</a>
+                            </h2>
+
+                        </Typing>
+
+                        {/* Page (text) content. */}
+                        <p>{displaySummary}</p>
+
+                        {/* Div to hold the data list and dashboard for bill*/}
+                        <div className="container-fluid">
+
+                            <div className="parent">
+
+                                {/* List of info to select from */}
+                                <DataList 
+                                    bill={this.bill}
+                                />
+
+                                <div className="dashboard">
+                                    <DisplaySummaryCard />
+                                </div>
+
                             </div>
 
+                            <div>
 
-                            <div className="dashboard">
-                                <DisplaySummaryCard />
+
+                                <div className="container-fluid-rating">
+
+                                    <Button> Not BS </Button>
+                                    <Button> BS </Button>
+
+                                </div>
+
+
+                                <ProgressBar animated variant="danger" now={45} />
                             </div>
 
                         </div>
-
-                        <div>
-                            {/*     
-                        <Form.Group controlId="formBasicRangeCustom">
-                            <Form.Label>Input for BS Meter</Form.Label>
-                            <Form.Control type="range" custom />
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center"
-                                }}>
-                                <Button> Rate BS </Button>
-
-                            </div>
-
-                        </Form.Group>
-                        */ }
-
-                            <div className="container-fluid-rating">
-
-                                <Button> Not BS </Button>
-                                <Button> BS </Button>
-
-                            </div>
-
-
-                            <ProgressBar animated variant="danger" now={45} />
-                        </div>
-
                     </div>
-                </div>
-            </body>
-        </>
-    );
+                </body>
+            </>
+        );
+    }
 };
 
 export default DocumentPage;

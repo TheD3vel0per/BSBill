@@ -1,68 +1,51 @@
 import React from "react";
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
-import { Subscription } from 'rxjs';
-import BillService from "../services/BillService";
+import Bill from '../model/Bill';
 
 
+class DataList extends React.Component<{bill: Bill},{}> {
 
-const DataList: React.FC<{}> = () => {
+    render() { 
+        return (
+              <>
+                <div className="list">
 
-    const [bills, setBills] = React.useState();
+                    {/* List of data we analyze for the bill (dates, monetary amounts, companies, etc ) */}
+                    <p>Bill Information</p>
 
-    let billsSub$: Subscription = new Subscription();
+                    <ul className="list-group">
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                            Companies <span className="badge bg-primary rounded-pill">{this.props.info.companies.length}</span>
+                        </li>
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                            Courts <span className="badge bg-primary rounded-pill">{this.props.info.courts.length}</span>
+                        </li>
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                            CUSIP <span className="badge bg-primary rounded-pill">{this.props.info.cusip.length}</span>
+                        </li>
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                            Dates
+                            <span className="badge bg-primary rounded-pill">{this.props.info.dates.length}</span>
+                        </li>
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                            Monetary Amounts
+                            <span className="badge bg-primary rounded-pill">{this.props.info.monetary.length}</span>
+                        </li>
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                            Percentages
+                            <span className="badge bg-primary rounded-pill">{this.props.info.percentageslength}</span>
+                        </li>
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                            Ratios <span className="badge bg-primary rounded-pill">{this.props.info.ratios.length}</span>
+                        </li>
+                    </ul>
+                </div>
 
-    React.useEffect(() => {
-        // @ts-ignore
-        const billService: BillService = window['bsbills']['billService'] as BillService;
+            </>
 
-        billsSub$ = billService.bills$.subscribe((data: React.SetStateAction<undefined>) => {
-            setBills(data);
-            console.log(data);
-        })
-    });
-
-    const bill_foo = {
-
-        "billName": "Improving Medical Diagnosis Act",
-
-        "billNumber": "HR5014",
-
-        "billUrl": "",
-
-        "extractedInfo": {
-            "dates": ["2020-03-05", "2017-10-01"],
-            "money": [100, 500, 30000000],
-            "percentages": ["50%"],
-            "ratios": []
-        }
+        );
     }
-
-
-
-    const dateLength = bill_foo.extractedInfo["dates"].length
-    const moneyLength = bill_foo.extractedInfo["money"].length
-    const percentagesLength = bill_foo.extractedInfo["percentages"].length
-    const ratioLength = bill_foo.extractedInfo["ratios"].length
-
-    return (
-
-        <>
-            <ul className="list-group">
-                <li className="list-group-item d-flex justify-content-between align-items-center">
-                    Dates <span className="badge bg-primary rounded-pill">{dateLength}</span>
-                </li>
-                <li className="list-group-item d-flex justify-content-between align-items-center">
-                    Monetary Amounts<span className="badge bg-primary rounded-pill">{moneyLength}</span>
-                </li>
-                <li className="list-group-item d-flex justify-content-between align-items-center">
-                    Percentages<span className="badge bg-primary rounded-pill">{percentagesLength}</span>
-                </li>
-            </ul>
-        </>
-
-    );
-
-};
+}
 
 export default DataList;

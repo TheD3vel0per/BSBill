@@ -20,9 +20,10 @@ class BillService {
             data.docs.forEach(element => {
                 bills.push(element.data() as Bill);
             });
-
+            
             this.bills$.next(bills);
         });
+        
     }
 }
 
