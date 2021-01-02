@@ -6,25 +6,31 @@ class DisplaySummaryCard extends React.Component<{ bill: Bill, selected: string 
 
   render() {
 
-    let bill;
-    if (typeof (this.props.bill) != "undefined") {
-      bill = this.props.bill;
+    let info: any;
+
+    if (typeof (this.props.bill.info) != "undefined") {
+      info = this.props.bill.info;
     } else {
-      bill = new Bill();
+      info = (new Bill()).info;
     }
-    
-    console.log("test")
-    console.log(bill.info);
-    // @ts-ignore
-    //console.log(bill.info[this.props.selected == undefined ? "companies" : this.props.selected]);
+
+    console.log(info[this.props.selected]);
+
+    const infoList = info[this.props.selected].map((e: string) => {
+      return (
+        <ul>
+          <li>{e}</li>
+        </ul>
+      )
+    })
 
     return (
       <Card style={{ width: '18rem' }}>
         <Card.Body>
-          <Card.Title>{this.props.selected} Found </Card.Title>
+          <Card.Title>{this.props.selected} </Card.Title>
           <Card.Text>
-            this.props.bill.info[selected]
-            </Card.Text>
+            {infoList}
+          </Card.Text>
         </Card.Body>
       </Card>
     );

@@ -14,8 +14,9 @@ import { mergeAll, filter, take } from 'rxjs/operators';
 import Bill from '../model/Bill';
 import { Subscription } from 'rxjs';
 
-class DocumentPage extends React.Component<{}, {bill: Bill, selected: string}> {
+class DocumentPage extends React.Component<{match: any}, { bill: Bill, selected: string }> {
     billsSub$: Subscription = new Subscription();
+    id: string;
 
     constructor(props: any) {
         super(props);
@@ -23,7 +24,7 @@ class DocumentPage extends React.Component<{}, {bill: Bill, selected: string}> {
             bill: new Bill(),
             selected: "companies"
         }
-
+        this.id = this.props.match.params.id;
         this.updateSelected = this.updateSelected.bind(this);
     }
 
@@ -38,13 +39,13 @@ class DocumentPage extends React.Component<{}, {bill: Bill, selected: string}> {
             });
         })
 
-        const id = "N.C 69";
+        console.log(this.id);
 
         const bill = await billService
             .bills$
             .pipe<Bill>(
                 mergeAll(),
-                filter((b: Bill) => b.billNumber == id),
+                filter((b: Bill) => b._id == this.id),
                 take(1)
             )
             .toPromise();
@@ -55,47 +56,26 @@ class DocumentPage extends React.Component<{}, {bill: Bill, selected: string}> {
 
     }
 
+    componentWillUnmount() {
+        this.billsSub$.unsubscribe();
+    }
+
 
     updateSelected(option: string) {
         this.setState({
             selected: option
         });
-        
+
     }
 
     render() {
-
-        console.log(this.state.selected);
 
         // Temporary link to navigate. Replace with dynamic bill url
         const tempLink = "https://www.congress.gov/congressional-record/2019/2/7/house-section/article/h1398-5?q=%7B%22search%22%3A%5B%22immigration%22%5D%7D&s=1&r=1"
 
         const displaySummary = "For this bill we have extracted: "
 
-        // TEST DATA, to be replaced with data from mongoDB
-        // const bill = {
-
-        //     "billName": "Improving Medical Diagnosis Act",
-
-        //     "billNumber": "HR5014",
-
-        //     "billUrl": "",
-
-        //     "info": {
-        //         "companies": ["Company-Name LLC"],
-        //         "courts": ["Supreme Court of New York"],
-        //         "dates": ["2020-03-05", "2017-10-01"],
-        //         "money": ["100", "500", "30000000"],
-        //         "percentages": ["50%"],
-        //         "ratios": ["one to three", "5:4"],
-        //         "regulations": ['123 CFR 456']
-        //     }
-        // }
-
-        // const dateLength = this.bill.info["dates"].length
-        // const moneyLength = this.bill.info["money"].length
-        // const percentagesLength = this.bill.info["percentages"].length
-        // const ratioLength = this.bill.info["ratios"].length
+        const title = typeof (this.state.bill.billName) != "undefined" ? this.state.bill.billName : "Title of Bill";
 
         return (
             <>
@@ -107,13 +87,13 @@ class DocumentPage extends React.Component<{}, {bill: Bill, selected: string}> {
                     <Header />
 
                     <div className="main">
-                        <Typing>
-                            {/* Bill Title. Links to the bill if user wants to explore it in detail.
-                            Have to use anchor tag bc react Link only uses absolte paths*/}
-                            <h2 className="display-4"><a href={tempLink} target="_blank"> Title of Bill</a>
-                            </h2>
 
-                        </Typing>
+                        {/* Bill Title. Links to the bill if user wants to explore it in detail.
+                            Have to use anchor tag bc react Link only uses absolte paths*/}
+                        <h2 className="display-4"><a href={this.state.bill.billURL} target="_blank">{title}</a>
+                        </h2>
+
+
 
                         {/* Page (text) content. */}
                         <p>{displaySummary}</p>
@@ -130,9 +110,9 @@ class DocumentPage extends React.Component<{}, {bill: Bill, selected: string}> {
                                 />
 
                                 <div className="dashboard">
-                                    <DisplaySummaryCard 
-                                    bill={this.state.bill}
-                                    selected={this.state.selected}
+                                    <DisplaySummaryCard
+                                        bill={this.state.bill}
+                                        selected={this.state.selected}
                                     />
                                 </div>
 
@@ -144,7 +124,7 @@ class DocumentPage extends React.Component<{}, {bill: Bill, selected: string}> {
                                 <div className="container-fluid-rating">
 
                                     <Button variant="success" size="lg"> Not BS </Button>
-                                    <Button variant="danger" size = "lg"> BS </Button>
+                                    <Button variant="danger" size="lg"> BS </Button>
 
                                 </div>
 

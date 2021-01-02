@@ -1,4 +1,5 @@
 export default class Document {
+    _id: string;
     billName: string;
     billNumber: string;
     billURL: string;
@@ -18,7 +19,7 @@ export default class Document {
     };
 
     constructor() {
-        
+        this._id = "";
         this.billName = "";
         this.billNumber = "";
         this.billURL = "";

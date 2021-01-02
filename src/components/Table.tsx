@@ -4,14 +4,19 @@ import Button from 'react-bootstrap/Button';
 import { Subscription } from 'rxjs';
 import BillService from "../services/BillService";
 import Bill from '../model/Bill';
+import { mergeAll, filter, take } from 'rxjs/operators';
+import Modal from "../components/Modal";
+import { Link } from 'react-router-dom';
 
-class Table extends React.Component<{}, {bills: Array<Bill> }>{
+class Table extends React.Component<{ query: string }, { bills: Array<Bill> }>{
+
     constructor(props: any) {
         super(props);
         this.state = {
             bills: []
         }
     }
+
 
     billsSub$: Subscription = new Subscription();
 
@@ -27,16 +32,28 @@ class Table extends React.Component<{}, {bills: Array<Bill> }>{
         })
     }
 
+    componentWillUnmount() {
+        this.billsSub$.unsubscribe();
+    }
+
 
     render() {
-        const billList = this.state.bills.map((bill, i) => {
+        const billList = this.state.bills.filter((bill) => {
+            return bill.billName.toLowerCase().includes(this.props.query.toLowerCase());
+        }).map((bill, i) => {
+
+            const link = "/document/" + bill._id;
             return (
-                <tr>
-                    <td>{i + 1}</td>
-                    <td>{bill.billNumber}</td>
-                    <td>{bill.billName}</td>
-                    <td><Button variant="primary">View</Button></td>
-                </tr>
+                <>
+                    <tr key={i}>
+                        <td>{i + 1}</td>
+                        <td>{bill.billNumber}</td>
+                        <td>{bill.billName}</td>
+                        <td><Button variant="primary" href={link}>View</Button></td>
+                    </tr>
+
+
+                </>
             )
         });
 
@@ -52,10 +69,21 @@ class Table extends React.Component<{}, {bills: Array<Bill> }>{
                 </MDBTableHead>
                 <MDBTableBody>
                     {billList}
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center"
+                        }}>
+                        <Modal />
+                    </div>
                 </MDBTableBody>
-            </MDBTable>
+            </MDBTable >
         );
     }
+
 }
 
 export default Table;
+
+

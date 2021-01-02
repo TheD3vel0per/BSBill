@@ -3,30 +3,49 @@ import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import './HomePage.css';
 import Table from "../components/Table";
-import Modal from "../components/Modal";
-// This page renders the home page along with all its components
-const HomePage: React.FC<{}> = () => {
-    return (
-        <>
-            <div className="app">
-                <Header />
-                <div>
-                    <img src="./images/billbs.png" className="center" />
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center"
-                        }}>
-                        <SearchBar />
-                        <Modal />
-                    </div>
-                    <Table />
-                </div>
 
-            </div>
-        </>
-    );
+// This page renders the home page along with all its components
+class HomePage extends React.Component<{}, { query: string }> {
+
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            query: "",
+        }
+        this.updateQuery = this.updateQuery.bind(this);
+    }
+
+
+    updateQuery(query: string) {
+        this.setState({
+            query: query,
+        })
+    }
+
+    render() {
+        return (
+            <>
+                <div className="app">
+                    <Header />
+                    <div>
+                        <img src="./images/billbs.png" className="bsbill-logo center" />
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center"
+                            }}>
+                            <SearchBar
+                                updateQuery={this.updateQuery}
+                            />
+                        </div>
+                        <Table query={this.state.query} />
+                    </div>
+
+                </div>
+            </>
+        );
+    }
 };
 
 export default HomePage;
