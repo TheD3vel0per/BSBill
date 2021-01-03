@@ -13,6 +13,7 @@ import DataList from "../components/DataList";
 import { mergeAll, filter, take } from 'rxjs/operators';
 import Bill from '../model/Bill';
 import { Subscription } from 'rxjs';
+import BSMeter from '../components/BSMeter';
 
 class DocumentPage extends React.Component<{match: any}, { bill: Bill, selected: string }> {
     billsSub$: Subscription = new Subscription();
@@ -129,7 +130,9 @@ class DocumentPage extends React.Component<{match: any}, { bill: Bill, selected:
                                 </div>
 
 
-                                <ProgressBar animated variant="danger" now={45} />
+                                <BSMeter 
+                                    billVotes={this.state.bill.billVotes}
+                                />
                             </div>
 
                         </div>
