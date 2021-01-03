@@ -1,7 +1,8 @@
 export default class Document {
+    _id: string;
     billName: string;
     billNumber: string;
-    billURL: string;
+    billUrl: string;
     info: {
         dates: Array<Date>,
         money: Array<Number>;
@@ -18,10 +19,10 @@ export default class Document {
     };
 
     constructor() {
-        
+        this._id = "";
         this.billName = "";
         this.billNumber = "";
-        this.billURL = "";
+        this.billUrl = "";
         this.info = {
             dates: [],
             money: [],

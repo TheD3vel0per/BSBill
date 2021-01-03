@@ -1,10 +1,16 @@
-# BSBills <img align="right" alt="BSBills" src="./public/images/billbs.png">
+# BSBills <img align="right" alt="BSBills" src="./public/images/billbs.png" width="150px" height="150px" style="border-radius: 25px;"> 
 
 ## About This Project
 
 ## Technologies Used:
+react, python, css3, firebase, firestore, bootstrap, docker
 
 ## API's Used:
+- LEXNLP
+- Beutiful Soup
+- Google-Cloud-Firebase
+- Google-Cloud-Firestore
+- Docker
 
 ## License
 ```
@@ -32,8 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 ## Application Demo
-
-coming soon 
+- [Project Link]()
 
 ## Available Scripts
 

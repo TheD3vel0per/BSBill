@@ -8,6 +8,7 @@ import {
 
 import HomePage from './pages/HomePage';
 import DocumentPage from './pages/DocumentPage';
+import AboutPage from './pages/AboutPage';
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
@@ -18,7 +19,8 @@ const App: React.FC<{}> = () => {
     <BrowserRouter>
 
       <Switch>
-      <Route path='/document' component={DocumentPage}></Route>
+      <Route path='/about-us' component={AboutPage}></Route>
+      <Route path='/document/:id' component={DocumentPage}></Route>
       <Route path='/' component={HomePage}></Route>
       
       </Switch>
