@@ -27,7 +27,7 @@ class DisplaySummaryCard extends React.Component<{ bill: Bill, selected: string 
     return (
       <Card style={{ width: '18rem' }}>
         <Card.Body>
-          <Card.Title>{this.props.selected} </Card.Title>
+          <Card.Title>{this.props.selected.toUpperCase()} </Card.Title>
           <Card.Text>
             {infoList}
           </Card.Text>

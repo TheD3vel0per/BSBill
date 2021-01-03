@@ -25,7 +25,9 @@ class DataList extends React.Component<{ bill: Bill, update: any}, {}> {
                 <div className="list">
 
 
-                    <p>Bill Information</p>
+                    <p style={{ 
+                        fontSize: '150%' 
+                    }}>Bill Information</p>
 
                     <ul className="list-group">
                         <li className="list-group-item d-flex justify-content-between align-items-center">

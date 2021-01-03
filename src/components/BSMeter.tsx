@@ -9,31 +9,32 @@ class BSMeter extends React.Component<{ bill: Bill }, {}> {
         super(props)
 
         this.incrementBs = this.incrementBs.bind(this);
+        this.incrementNotBs = this.incrementNotBs.bind(this);
     }
 
 
-    incrementBs() {
+    async incrementBs() {
         const db = firebase.firestore();
         const increment = firebase.firestore.FieldValue.increment(1);
-        //const billRef = db.collection("Bills").doc(this.props.bill._id);
+        const billRef = db.collection("Bills").doc(this.props.bill._id);
 
-        const billRef = db.collection("Bills").doc("69");
-        console.log("hewwo")
-        const id: string = this.props.bill._id;
-        console.log(billRef);
-
-        billRef.update({
-            test: increment,
-        });
-
-        
+        await billRef.update({
+            'billVotes.bs': increment
+        })
+ 
         window.location.reload();
+    }
 
-        // billRef.update({
-        //     billVotes: {
-        //         bs: increment
-        //     }    
-        // })
+    async incrementNotBs() {
+        const db = firebase.firestore();
+        const increment = firebase.firestore.FieldValue.increment(1);
+        const billRef = db.collection("Bills").doc(this.props.bill._id);
+
+        await billRef.update({
+            'billVotes.notbs': increment
+        })
+ 
+        window.location.reload();
     }
 
 
@@ -53,7 +54,7 @@ class BSMeter extends React.Component<{ bill: Bill }, {}> {
             <>
                 <div className="container-fluid-rating">
 
-                    <Button variant="success" size="lg"> Not BS </Button>
+                    <Button variant="success" size="lg" onClick={this.incrementNotBs}> Not BS </Button>
                     <Button variant="danger" size="lg" onClick={this.incrementBs}> BS </Button>
 
                 </div>

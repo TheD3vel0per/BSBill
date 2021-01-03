@@ -47,7 +47,6 @@ class Table extends React.Component<{ query: string }, { bills: Array<Bill> }>{
                 <>
                     <tr key={i}>
                         <td>{i + 1}</td>
-                        <td>{bill.billNumber}</td>
                         <td>{bill.billName}</td>
                         <td><Button variant="primary" href={link}>View</Button></td>
                     </tr>
@@ -62,7 +61,6 @@ class Table extends React.Component<{ query: string }, { bills: Array<Bill> }>{
                 <MDBTableHead bordered color="success-color" textWhite>
                     <tr>
                         <th>#</th>
-                        <th>Bill Number</th>
                         <th>Bill Name</th>
                         <th>View</th>
                     </tr>

@@ -35,22 +35,19 @@ const ModalComponent = () => {
     const json = await response.json();
     setData(json);
 
+
     // @ts-ignore
     const billService: BillService = window['bsbills']['billService'] as BillService;
     const id = JSON.stringify(data) == "{}" ? (await billService.bills$.pipe(
       mergeAll(),
-      filter((b: any) => b.billUrl == url),
+      filter((b: Bill) => b.billUrl == url),
       take(1)
     ))._id : json._id;
 
-    console.log(id);
+     console.log(id);
 
-    if (JSON.stringify(data) == "{}" && (id != "undefined" || id != undefined)) {
       setShow(false);
-      const link = "/document/" + id;
-      window.location.href = link;
-    }
-
+    
   }
 
   return (

@@ -19,7 +19,7 @@ class AboutPage extends React.Component {
                     <div className="frontside">
                       <div className="card">
                         <div className="card-body text-center">
-                          <p><img className="img-fluid" src="/assets/images/headshots/devam.jpg" alt="card" /></p>
+                          <p><img className="img-fluid" src="images/devam.jpg" alt="card" /></p>
                           <h4 className="card-title">Devam Sisodraker</h4>
                           <p className="card-text">I’m Devam, a second year Math & Computer Science student at UBC with a passion for software engineering.</p>
                         </div>
@@ -57,7 +57,7 @@ class AboutPage extends React.Component {
                     <div className="frontside">
                       <div className="card">
                         <div className="card-body text-center">
-                          <p><img className=" img-fluid" src="/assets/images/headshots/vishal.jpg" alt="card" /></p>
+                          <p><img className=" img-fluid" src="images/vishal.jpg" alt="card" /></p>
                           <h4 className="card-title">Vishal Desh</h4>
                           <p className="card-text">Hi, I am Vishal Desh currently pursuing Computer Science at UBC.</p>
                         </div>
@@ -94,7 +94,7 @@ class AboutPage extends React.Component {
                     <div className="frontside">
                       <div className="card">
                         <div className="card-body text-center">
-                          <p><img className=" img-fluid" src="/images/headshots/noah.jpg" alt="card image" /></p>
+                          <p><img className=" img-fluid" src="images/noah.jpg" alt="card image" /></p>
                           <h4 className="card-title">Noah Caleanu</h4>
                           <p className="card-text">UBC Electrical Engineer 2020</p>
                           <a href="https://www.fiverr.com/share/qb8D02" className="btn btn-primary btn-sm"><i className="fa fa-plus" /></a>
@@ -105,7 +105,7 @@ class AboutPage extends React.Component {
                       <div className="card">
                         <div className="card-body text-center mt-4">
                           <h4 className="card-title">About Me</h4>
-                          <p className="card-text">Interest in sustainable technology and interplanetery travel. I enjoyed this hackathon, I learned Javascript and React.</p>
+                          <p className="card-text">Engineering student interested in Python coding. I love hackathons and building new things </p>
                           <ul className="list-inline">
                             <li className="list-inline-item">
                               <a className="social-icon text-xs-center" target="_blank" href="https://www.linkedin.com/in/noah-caleanu-871662135/">
@@ -129,7 +129,7 @@ class AboutPage extends React.Component {
                     <div className="frontside">
                       <div className="card">
                         <div className="card-body text-center">
-                          <p><img className="img-fluid" src="/assets/images/headshots/aiden.jpg" alt="card" /></p>
+                          <p><img className="img-fluid" src="images/aiden.jpg" alt="card" /></p>
                           <h4 className="card-title">Aiden Kerr</h4>
                           <p className="card-text">Hey, I'm Aiden! I'm a second year Computer Science student at UBC</p>
                         </div>

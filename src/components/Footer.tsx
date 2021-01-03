@@ -20,7 +20,7 @@ const Footer: React.FC<{}> = () => {
                     <div className="footer-copyright text-center py-3" style={{ color: 'white' }}>
                         <MDBContainer fluid>
                             &copy; {new Date().getFullYear()} Copyright: <a href="https://BSBills.online" style={{ color: 'white' }}> BSBills.online</a>
-                | <Link to="/privacy-policy" style={{ color: 'white' }}>Privacy Policy</Link>
+                | <Link to="/privacy" style={{ color: 'white' }}>Privacy Policy</Link>
                         </MDBContainer>
                     </div>
                 </MDBFooter>

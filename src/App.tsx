@@ -9,7 +9,7 @@ import {
 import HomePage from './pages/HomePage';
 import DocumentPage from './pages/DocumentPage';
 import AboutPage from './pages/AboutPage';
-
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
@@ -19,6 +19,7 @@ const App: React.FC<{}> = () => {
     <BrowserRouter>
 
       <Switch>
+      <Route path='/privacy' component={PrivacyPolicy}></Route>
       <Route path='/about-us' component={AboutPage}></Route>
       <Route path='/document/:id' component={DocumentPage}></Route>
       <Route path='/' component={HomePage}></Route>

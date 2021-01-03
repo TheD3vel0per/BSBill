@@ -14,6 +14,7 @@ import Bill from '../model/Bill';
 import { Subscription } from 'rxjs';
 import BSMeter from "../components/BSMeter";
 import BillService from "../services/BillService";
+import { useHistory } from 'react-router'
 
 class DocumentPage extends React.Component<{match: any}, { bill: Bill, selected: string }> {
     billsSub$: Subscription = new Subscription();
@@ -53,7 +54,6 @@ class DocumentPage extends React.Component<{match: any}, { bill: Bill, selected:
         this.setState({
             bill: bill,
         });
-
     }
 
     componentWillUnmount() {
@@ -86,7 +86,7 @@ class DocumentPage extends React.Component<{match: any}, { bill: Bill, selected:
 
         const displaySummary = "For this bill we have extracted: "
 
-        const title = typeof (this.state.bill.billName) != "undefined" ? this.state.bill.billName : "Title of Bill";
+        const title = typeof (this.state.bill.billName) != "undefined" ? this.state.bill.billName : "Refresh to load data";
 
         return (
             <>
@@ -101,18 +101,25 @@ class DocumentPage extends React.Component<{match: any}, { bill: Bill, selected:
 
                         {/* Bill Title. Links to the bill if user wants to explore it in detail.
                             Have to use anchor tag bc react Link only uses absolte paths*/}
-                        <h2 className="display-4"><a href={info} target="_blank">{title}</a>
-                        </h2>
+                        <h4 className="display-4 "
+                        
+                        ><a href={info} target="_blank">{title}</a>
+                        </h4>
 
 
 
                         {/* Page (text) content. */}
-                        <p>{displaySummary}</p>
+                        <p style={{ 
+                        fontSize: '150%' 
+                    }}
+                        >{displaySummary}</p>
 
                         {/* Div to hold the data list and dashboard for bill*/}
                         <div className="container-fluid">
 
-                            <div className="parent">
+                            <div className="parent" style={{ 
+                        marginTop: '10%' 
+                    }}>
 
                                 {/* List of info to select from */}
                                 <DataList
@@ -120,7 +127,8 @@ class DocumentPage extends React.Component<{match: any}, { bill: Bill, selected:
                                     update={this.updateSelected}
                                 />
 
-                                <div className="dashboard">
+                                <div className="dashboard" 
+                                >
                                     <DisplaySummaryCard
                                         bill={this.state.bill}
                                         selected={this.state.selected}
